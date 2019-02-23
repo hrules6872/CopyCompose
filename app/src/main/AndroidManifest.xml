@@ -38,6 +38,11 @@
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
     </activity>
+
+    <service
+        android:name=".services.ClipboardMonitorService"
+        android:exported="false"
+        android:label="CopyCompose App Clipboard Monitor"/>
   </application>
 
 </manifest>

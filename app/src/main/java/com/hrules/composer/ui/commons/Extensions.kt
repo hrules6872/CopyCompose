@@ -23,3 +23,4 @@ fun Context.string(resStringId: Int) = this.getString(resStringId) ?: ""
 
 fun EditText.safeText(): String = text?.toString() ?: ""
 fun EditText.clearText() = setText("")
+
