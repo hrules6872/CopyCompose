@@ -24,7 +24,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.hrules.composer.R
 import com.hrules.composer.R.layout
-import com.hrules.composer.services.ClipboardMonitorService
+import com.hrules.composer.services.getClipBoardMonitorService
 import com.hrules.composer.ui.commons.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar_action_switch.view.action_switch
@@ -104,10 +104,9 @@ class MainActivity : AppCompatActivity() {
   }
 
   private fun setupService(state: Boolean) {
-    val serviceIntent = Intent(this, ClipboardMonitorService::class.java)
     when {
-      state -> startService(serviceIntent)
-      else -> stopService(serviceIntent)
+      state -> startService(getClipBoardMonitorService())
+      else -> stopService(getClipBoardMonitorService())
     }
   }
 

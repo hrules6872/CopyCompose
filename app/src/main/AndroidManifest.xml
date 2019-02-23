@@ -19,6 +19,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.hrules.composer">
 
+  <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+
   <application
       android:allowBackup="true"
       android:icon="@mipmap/ic_launcher"
@@ -43,6 +45,16 @@
         android:name=".services.ClipboardMonitorService"
         android:exported="false"
         android:label="CopyCompose App Clipboard Monitor"/>
+
+    <receiver
+        android:name=".services.BootCompletedIntentReceiver"
+        android:enabled="true"
+        android:exported="true">
+      <intent-filter>
+        <action android:name="android.intent.action.BOOT_COMPLETED"/>
+      </intent-filter>
+    </receiver>
+
   </application>
 
 </manifest>

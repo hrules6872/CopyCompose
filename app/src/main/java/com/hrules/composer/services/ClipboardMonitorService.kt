@@ -21,6 +21,8 @@ import android.content.*
 import android.os.IBinder
 import com.hrules.composer.ui.commons.Preferences
 
+fun Context.getClipBoardMonitorService() = Intent(this, ClipboardMonitorService::class.java)
+
 class ClipboardMonitorService : Service() {
   companion object {
     private const val EMPTY_CLIP = ""
