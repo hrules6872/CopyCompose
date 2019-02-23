@@ -60,7 +60,11 @@ class MainActivity : AppCompatActivity() {
     inflateMenu(R.menu.menu_main)
     setOnMenuItemClickListener { menuItem ->
       when (menuItem.itemId) {
-        R.id.action_clear -> ClearDialog.build(this@MainActivity) { note.clearText() }.show()
+        R.id.action_clear -> ClearDialog.build(this@MainActivity) {
+          note.clearText()
+          preferences.note = ""
+        }.show()
+
         R.id.action_about -> {
           try {
             val aboutIntent = Intent(Intent.ACTION_VIEW, Uri.parse(string(R.string.homepage)))
