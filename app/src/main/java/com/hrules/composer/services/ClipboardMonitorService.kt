@@ -52,6 +52,8 @@ class ClipboardMonitorService : Service() {
     }
   }
 
+  override fun onStartCommand(intent: Intent, flags: Int, startId: Int) = Service.START_STICKY
+
   override fun onDestroy() {
     super.onDestroy()
     clipboardManager?.removePrimaryClipChangedListener(
