@@ -20,6 +20,8 @@
 
   <string name="error_no_browser">No application can handle this request</string>
 
+  <string name="info_notify">Saved to CopyCompose</string>
+
   <string name="dialog_clear_title">Are you sure?</string>
   <string name="dialog_share_title">Share via</string>
 

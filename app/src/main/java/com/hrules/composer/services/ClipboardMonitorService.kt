@@ -19,8 +19,9 @@ package com.hrules.composer.services
 import android.app.Service
 import android.content.*
 import android.os.IBinder
-import com.hrules.composer.AppLifecycle
-import com.hrules.composer.ui.commons.Preferences
+import android.widget.Toast
+import com.hrules.composer.*
+import com.hrules.composer.ui.commons.*
 
 fun Context.getClipBoardMonitorService() = Intent(this, ClipboardMonitorService::class.java)
 
@@ -36,6 +37,7 @@ class ClipboardMonitorService : Service() {
     val clip = clipboardManager?.getFirstClip() ?: EMPTY_CLIP
     if (clip != EMPTY_CLIP && !AppLifecycle.isAppInForeground) {
       preferences.note = "${preferences.note}\n$clip"
+      notifyUser(this)
     }
   }
 
@@ -58,6 +60,10 @@ class ClipboardMonitorService : Service() {
   }
 
   override fun onBind(intent: Intent?): IBinder? = null
+
+  private fun notifyUser(context: Context) {
+    Toast.makeText(context, context.string(R.string.info_notify), Toast.LENGTH_LONG).show()
+  }
 
   private fun ClipboardManager.getFirstClip() = primaryClip?.getItemAt(0)?.text ?: EMPTY_CLIP
 }
