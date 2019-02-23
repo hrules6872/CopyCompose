@@ -1,0 +1,19 @@
+ext {
+
+  configuration = [
+
+      androidBuildToolsVersion = '28.0.3',
+      androidBuildMinSDKVersion = '23',
+      androidBuildTargetSDKVersion = '28',
+      androidBuildCompileSDKVersion = 28,
+
+      appVersionMajor = 1,
+      appVersionMinor = 0,
+      appVersionPatch = 0,
+      appVersionBuild = 0,
+
+      appVersionCode = appVersionMajor * 1000000 + appVersionMinor * 10000 + appVersionPatch * 100 + appVersionBuild,
+      appVersionName = "${appVersionMajor}.${appVersionMinor}.${appVersionPatch}-${appVersionCode}"
+
+  ]
+}

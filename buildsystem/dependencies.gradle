@@ -1,0 +1,25 @@
+ext {
+
+  dependencies = [
+
+      projectDependencies = [
+
+          kotlin: "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}",
+
+      ],
+
+      androidXAppCompatVersion = "1.0.2",
+      androidXVersion = "1.0.1",
+      androidXViewVersion = "1.0.0",
+      androidSupportDependencies = [
+
+          appCompatV7       : "androidx.appcompat:appcompat:${androidXAppCompatVersion}",
+          cardView          : "androidx.cardview:cardview:${androidXViewVersion}",
+          design            : "com.google.android.material:material:${androidXViewVersion}",
+          support           : "androidx.core:core:${androidXVersion}",
+          supportAnnotations: "androidx.annotation:annotation:${androidXVersion}"
+
+      ],
+
+  ]
+}

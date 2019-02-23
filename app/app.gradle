@@ -1,0 +1,44 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply from: rootProject.file('buildsystem/configuration.gradle')
+
+android {
+  compileSdkVersion androidBuildCompileSDKVersion
+  buildToolsVersion androidBuildToolsVersion
+
+  defaultConfig {
+    applicationId "com.hrules.composer"
+    minSdkVersion androidBuildMinSDKVersion
+    targetSdkVersion androidBuildTargetSDKVersion
+    versionCode appVersionCode
+    versionName appVersionName
+  }
+
+  buildTypes {
+    debug {
+      applicationIdSuffix ".debug"
+      versionNameSuffix '-debug'
+      debuggable true
+      minifyEnabled false
+    }
+
+    release {
+      debuggable false
+      minifyEnabled true
+      shrinkResources true
+      proguardFile 'proguard-rules.pro'
+      zipAlignEnabled true
+    }
+  }
+}
+
+dependencies {
+  projectDependencies.each {
+    add('implementation', it.value)
+  }
+
+  androidSupportDependencies.each {
+    add('implementation', it.value)
+  }
+}
