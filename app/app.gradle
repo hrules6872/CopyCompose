@@ -31,6 +31,18 @@ android {
     versionName appVersionName
   }
 
+  signingConfigs {
+    release {
+      Properties appSecretProps = new Properties()
+      appSecretProps.load(new FileInputStream(new File('app.secrets.properties')))
+
+      keyAlias appSecretProps['APP_RELEASE_KEYALIAS']
+      keyPassword appSecretProps['APP_RELEASE_KEYPASSWORD']
+      storeFile file(appSecretProps['APP_RELEASE_STOREFILE'])
+      storePassword appSecretProps['APP_RELEASE_STOREPASSWORD']
+    }
+  }
+
   buildTypes {
     debug {
       applicationIdSuffix ".debug"
@@ -45,6 +57,7 @@ android {
       shrinkResources true
       proguardFile 'proguard-rules.pro'
       zipAlignEnabled true
+      signingConfig signingConfigs.release
     }
   }
 }
