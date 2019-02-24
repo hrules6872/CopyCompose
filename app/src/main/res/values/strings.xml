@@ -29,4 +29,5 @@
   <string name="action_about">About</string>
   <string name="action_cancel">Cancel</string>
   <string name="action_copycompose">CopyCompose</string>
+  <string name="action_lower_case">Lower case</string>
 </resources>
