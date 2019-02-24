@@ -17,11 +17,12 @@
 package com.hrules.composer.services
 
 import android.content.*
+import androidx.core.content.ContextCompat
 
 class BootCompletedIntentReceiver : BroadcastReceiver() {
   override fun onReceive(context: Context, intent: Intent) {
     if (Intent.ACTION_BOOT_COMPLETED == intent.action) {
-      context.startService(context.getClipBoardMonitorService())
+      ContextCompat.startForegroundService(context, context.getClipBoardMonitorIntentService())
     }
   }
 }

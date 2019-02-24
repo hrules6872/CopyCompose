@@ -22,9 +22,9 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import com.hrules.composer.R
-import com.hrules.composer.R.layout
-import com.hrules.composer.services.getClipBoardMonitorService
+import com.hrules.composer.services.getClipBoardMonitorIntentService
 import com.hrules.composer.ui.commons.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar_action_switch.view.action_switch
@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(layout.activity_main)
+    setContentView(R.layout.activity_main)
 
     setupToolbar()
     setupFab()
@@ -105,8 +105,8 @@ class MainActivity : AppCompatActivity() {
 
   private fun setupService(state: Boolean) {
     when {
-      state -> startService(getClipBoardMonitorService())
-      else -> stopService(getClipBoardMonitorService())
+      state -> ContextCompat.startForegroundService(this, getClipBoardMonitorIntentService())
+      else -> stopService(getClipBoardMonitorIntentService())
     }
   }
 

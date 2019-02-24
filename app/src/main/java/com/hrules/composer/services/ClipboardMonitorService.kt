@@ -23,42 +23,44 @@ import android.widget.Toast
 import com.hrules.composer.*
 import com.hrules.composer.ui.commons.*
 
-fun Context.getClipBoardMonitorService() = Intent(this, ClipboardMonitorService::class.java)
+fun Context.getClipBoardMonitorIntentService() = Intent(this, ClipboardMonitorService::class.java)
 
 class ClipboardMonitorService : Service() {
   companion object {
     private const val EMPTY_CLIP = ""
+
+    private var lastClip = ""
   }
 
   private val preferences by lazy { Preferences(this) }
-  private var clipboardManager: ClipboardManager? = null
+  private val clipboardManager: ClipboardManager by lazy { getSystemService(CLIPBOARD_SERVICE) as ClipboardManager }
 
   private val onPrimaryClipChangedListener = ClipboardManager.OnPrimaryClipChangedListener {
-    val clip = clipboardManager?.getFirstClip() ?: EMPTY_CLIP
-    if (clip != EMPTY_CLIP && !AppLifecycle.isAppInForeground) {
+    val clip: String = clipboardManager.getFirstClip()
+    if (clip.isNotEmptyClip() and
+      clip.isNotEqualLastClip() and
+      !AppLifecycle.isAppInForeground
+    ) {
       preferences.note = "${preferences.note}\n$clip"
+
       notifyUser(this)
+      lastClip = clip
     }
   }
 
   override fun onCreate() {
     super.onCreate()
-    if (preferences.serviceActive) {
-      clipboardManager = (getSystemService(CLIPBOARD_SERVICE) as ClipboardManager).apply {
-        addPrimaryClipChangedListener(
-          onPrimaryClipChangedListener
-        )
-      }
+    clipboardManager.apply {
+      removeListener()
+      addListener()
     }
-  }
 
-  override fun onStartCommand(intent: Intent, flags: Int, startId: Int) = Service.START_STICKY
+    startForeground(ClipboardMonitorNotification.ID, ClipboardMonitorNotification.create(this))
+  }
 
   override fun onDestroy() {
     super.onDestroy()
-    clipboardManager?.removePrimaryClipChangedListener(
-      onPrimaryClipChangedListener
-    )
+    clipboardManager.removeListener()
   }
 
   override fun onBind(intent: Intent?): IBinder? = null
@@ -67,5 +69,19 @@ class ClipboardMonitorService : Service() {
     Toast.makeText(context, context.string(R.string.info_notify), Toast.LENGTH_LONG).show()
   }
 
-  private fun ClipboardManager.getFirstClip() = primaryClip?.getItemAt(0)?.text ?: EMPTY_CLIP
+  private fun ClipboardManager.addListener() {
+    addPrimaryClipChangedListener(
+      onPrimaryClipChangedListener
+    )
+  }
+
+  private fun ClipboardManager.removeListener() {
+    removePrimaryClipChangedListener(
+      onPrimaryClipChangedListener
+    )
+  }
+
+  private fun ClipboardManager.getFirstClip() = primaryClip?.getItemAt(0)?.text?.toString() ?: EMPTY_CLIP
+  private fun String.isNotEmptyClip() = this != EMPTY_CLIP
+  private fun String.isNotEqualLastClip() = this != lastClip
 }
