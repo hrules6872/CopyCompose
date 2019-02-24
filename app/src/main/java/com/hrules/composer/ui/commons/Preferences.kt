@@ -26,7 +26,7 @@ class Preferences(private val context: Context) {
     private const val KEY_NOTE = "key_note"
     private const val KEY_NOTE_CURSOR_POSITION = "key_note_cursor_position"
 
-    private const val DEFAULT_KEY_SERVICE_ACTIVE = true
+    private const val DEFAULT_KEY_SERVICE_ACTIVE = false
     private const val DEFAULT_KEY_NOTE = ""
     private const val DEFAULT_KEY_NOTE_CURSOR_POSITION = 0
   }
