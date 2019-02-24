@@ -20,14 +20,8 @@ import android.app.*
 import android.os.Bundle
 
 class App : Application() {
-  companion object {
-    private var INSTANCE: App? = null
-    fun get(): App = INSTANCE!!
-  }
-
   override fun onCreate() {
     super.onCreate()
-    INSTANCE = this
     registerActivityLifecycleCallbacks(AppLifecycle())
   }
 }
