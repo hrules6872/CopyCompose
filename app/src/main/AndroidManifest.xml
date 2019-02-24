@@ -44,6 +44,7 @@
 
     <activity
         android:name=".ui.ReceiverActivity"
+        android:label="@string/action_copycompose"
         android:noHistory="true"
         android:theme="@style/AppTheme.NoDisplay">
       <intent-filter>
