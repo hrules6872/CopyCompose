@@ -19,16 +19,13 @@ package com.hrules.composer.services
 import android.app.Service
 import android.content.*
 import android.os.IBinder
-import android.widget.Toast
 import com.hrules.composer.*
-import com.hrules.composer.ui.commons.*
+import com.hrules.composer.ui.commons.Preferences
 
 fun Context.getClipBoardMonitorIntentService() = Intent(this, ClipboardMonitorService::class.java)
 
 class ClipboardMonitorService : Service() {
   companion object {
-    private const val EMPTY_CLIP = ""
-
     private var lastClip = ""
   }
 
@@ -42,7 +39,6 @@ class ClipboardMonitorService : Service() {
       !AppLifecycle.isAppInForeground
     ) {
       preferences.note = "${preferences.note}\n$clip"
-
       notifyUser(this)
       lastClip = clip
     }
@@ -65,10 +61,6 @@ class ClipboardMonitorService : Service() {
 
   override fun onBind(intent: Intent?): IBinder? = null
 
-  private fun notifyUser(context: Context) {
-    Toast.makeText(context, context.string(R.string.info_notify), Toast.LENGTH_LONG).show()
-  }
-
   private fun ClipboardManager.addListener() {
     addPrimaryClipChangedListener(
       onPrimaryClipChangedListener
@@ -82,6 +74,5 @@ class ClipboardMonitorService : Service() {
   }
 
   private fun ClipboardManager.getFirstClip() = primaryClip?.getItemAt(0)?.text?.toString() ?: EMPTY_CLIP
-  private fun String.isNotEmptyClip() = this != EMPTY_CLIP
   private fun String.isNotEqualLastClip() = this != lastClip
 }
